@@ -187,11 +187,9 @@ export function useBenchmark(): UseBenchmarkReturn {
       return;
     }
     
-    // Only clear results if not resuming from a paused state
-    if (benchmarkRunner.getStatus() !== 'paused') {
-      setResults([]);
-      resultsRef.current = [];
-    }
+    // Clear results before starting new benchmark
+    setResults([]);
+    resultsRef.current = [];
     
     const run = await benchmarkRunner.runBenchmark(enabledModelsList, selectedTests, {
       delayBetweenRequests: 500,

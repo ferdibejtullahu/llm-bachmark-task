@@ -34,14 +34,10 @@ function App() {
     resetModels,
     
     toggleTestCase,
-    selectByCategory,
     handleTestCasesChange,
     
     startBenchmark,
     stopBenchmark,
-    
-    exportResults,
-    importResults,
     
     enabledModelsCount,
     selectedTestCasesCount,
@@ -58,12 +54,12 @@ function App() {
       const toastId = toast.loading('Starting benchmark...');
       setLoadingToastId(toastId);
       
-      const run = await startBenchmark();
+      await startBenchmark();
       
       toast.dismiss(toastId);
       setLoadingToastId(null);
       
-      if (run.status === 'completed') {
+      if (status === 'completed') {
         toast.success('Benchmark completed!');
       }
       
@@ -171,7 +167,6 @@ function App() {
               <TestCaseSelection
                 selectedTestCases={selectedTestCases}
                 onToggleTestCase={toggleTestCase}
-                onSelectByCategory={selectByCategory}
                 onTestCasesChange={handleTestCasesChange}
               />
             </div>

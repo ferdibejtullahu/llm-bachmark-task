@@ -12,14 +12,12 @@ import type { TestCase } from '@/types/benchmark';
 interface TestCaseSelectionProps {
   selectedTestCases: string[];
   onToggleTestCase: (testCaseId: string) => void;
-  onSelectByCategory: (category: string) => void;
   onTestCasesChange?: (testCases: TestCase[]) => void;
 }
 
 export function TestCaseSelection({
   selectedTestCases,
   onToggleTestCase,
-  onSelectByCategory,
   onTestCasesChange
 }: TestCaseSelectionProps) {
   const [allTestCases, setAllTestCases] = useState<TestCase[]>(getAllTestCases());

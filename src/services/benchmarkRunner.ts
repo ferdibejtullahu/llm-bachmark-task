@@ -2,7 +2,7 @@ import type { BenchmarkRun, BenchmarkResult, TestCase, ModelConfig } from '@/typ
 import { getProvider } from './llmProviders';
 import { evaluateCode, generateFeedback } from './evaluationEngine';
 
-export type BenchmarkStatus = 'idle' | 'running' | 'paused' | 'completed' | 'failed';
+export type BenchmarkStatus = 'idle' | 'running' | 'completed' | 'failed';
 
 export interface BenchmarkProgress {
   current: number;
@@ -19,7 +19,6 @@ export class BenchmarkRunner {
   private resultCallback?: (result: BenchmarkResult) => void;
   private statusCallback?: (status: BenchmarkStatus) => void;
   private abortController: AbortController | null = null;
-  private isPaused: boolean = false;
   private pausedState: {
     models: ModelConfig[];
     testCases: TestCase[];
@@ -370,18 +369,16 @@ export class BenchmarkRunner {
 
   pauseBenchmark() {
     if (this.status === 'running') {
-      this.isPaused = true;
       this.abortController?.abort();
-      this.updateStatus('paused');
+      this.updateStatus('idle');
       if (this.currentRun) {
-        this.currentRun.status = 'paused';
+        this.currentRun.status = 'failed';
       }
     }
   }
 
   async resumeBenchmark() {
-    if (this.status === 'paused' && this.pausedState && this.currentRun) {
-      this.isPaused = false;
+    if (this.pausedState && this.currentRun) {
       this.abortController = new AbortController();
       this.updateStatus('running');
       this.currentRun.status = 'running';
@@ -392,7 +389,6 @@ export class BenchmarkRunner {
   }
 
   stopBenchmark() {
-    this.isPaused = false;
     this.pausedState = null;
     this.abortController?.abort();
     this.updateStatus('idle');
