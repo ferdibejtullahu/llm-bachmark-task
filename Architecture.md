@@ -45,16 +45,6 @@ The LLM Code Generation Benchmark is a React-based web application that evaluate
 
 All OpenRouter models share a single API key configured in the UI.
 
-### Removed Features (for UI Simplification)
-- ❌ Custom provider tab and custom model configuration
-- ❌ Pause/Resume benchmark functionality
-- ❌ Export/Import results to JSON
-- ❌ Clear Results button
-- ❌ Check Availability button
-- ❌ Selection badges showing "X/Y selected"
-- ❌ Select All / Select None buttons
-- ❌ Per-model API key entry (now global for OpenRouter)
-
 ---
 
 ## Architecture Diagrams
